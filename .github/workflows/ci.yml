@@ -19,7 +19,7 @@ jobs:
 
     - name: Compress the output images
       run: |
-        tar -czvf images.tar.gz /tmp/deploy/images
+        tar -czvf images.tar.gz ./tmp/deploy/images
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
