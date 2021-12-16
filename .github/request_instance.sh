@@ -7,4 +7,4 @@ SPOT_REQ_ID=$(cat spot_request_resp.json | jq '.SpotInstanceRequests[0].SpotInst
 
 echo "Resp (${SPOT_REQ_RESP}) - Received Spot Request ID: ${SPOT_REQ_ID}"
 
-return ${SPOT_REQ_RESP}
+exit ${SPOT_REQ_RESP}
