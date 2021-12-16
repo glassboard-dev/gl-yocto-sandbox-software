@@ -1,0 +1,17 @@
+{
+    "ImageId": "ami-05398b9d3cbbe65a5",
+    "InstanceType": "m5a.8xlarge",
+    "KeyName": "yocto-runner-keypair",
+    "BlockDeviceMappings": [
+        {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+                "DeleteOnTermination": true,
+                "SnapshotId": "snap-0f39c09e1c7a8a486",
+                "VolumeSize": 100,
+                "VolumeType": "gp2",
+                "Encrypted": false
+            }
+        }
+    ]
+}

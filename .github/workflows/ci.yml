@@ -5,7 +5,26 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  build:
+  request-runner:
+    runs-on: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install AWS CLI
+      run: |
+        apt-get install awscli
+
+    - name: Create AWS CLI Credentials file
+      run: |
+        echo [default] >> ~/.aws/credentials
+        echo region=us-east-2 >> ~/.aws/credentials
+        echo aws_access_key_id=${{secrets.AWS_ACCESS_KEY_ID}} >> ~/.aws/credentials
+        echo aws_secret_access_key=${{secrets.AWS_SECRET_ACCESS_KEY}} >> ~/.aws/credentials
+
+    - name: Create an AWS spot request
+      run: |
+        ./.github/request_instance.sh
+
+  build-yocto:
     runs-on: [self-hosted, linux, x64, yocto]
     steps:
     - uses: actions/checkout@v2
