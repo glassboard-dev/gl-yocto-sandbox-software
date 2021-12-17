@@ -33,6 +33,7 @@ jobs:
   build-yocto:
     needs: [request-runner]
     runs-on: [self-hosted, linux, x64, yocto]
+    continue-on-error: true
     steps:
     - uses: actions/checkout@v2
       with:

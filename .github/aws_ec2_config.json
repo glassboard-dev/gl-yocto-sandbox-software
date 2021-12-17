@@ -2,6 +2,7 @@
     "ImageId": "ami-05398b9d3cbbe65a5",
     "InstanceType": "c5.18xlarge",
     "KeyName": "yocto-runner-keypair",
+    "EbsOptimized": true,
     "BlockDeviceMappings": [
         {
             "DeviceName": "/dev/sda1",
@@ -9,7 +10,9 @@
                 "DeleteOnTermination": true,
                 "SnapshotId": "snap-0f39c09e1c7a8a486",
                 "VolumeSize": 100,
-                "VolumeType": "gp2",
+                "VolumeType": "gp3",
+                "Throughput": 1000,
+                "Iops": 16000,
                 "Encrypted": false
             }
         }
