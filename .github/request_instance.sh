@@ -38,4 +38,8 @@ if [ "$INSTANCE_ID" == "" ]; then
     exit 1
 fi
 
+# Set out outputs for our Github Actions step
+echo "::set-output name=spotReqID::${SPOT_REQ_ID}\n"
+echo "::set-output name=instanceID::${INSTANCE_ID}\n"
+
 exit 0
