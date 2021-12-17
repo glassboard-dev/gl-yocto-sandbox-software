@@ -9,6 +9,7 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v2
+
     - name: Install AWS CLI
       run: |
         sudo apt-get install awscli jq
@@ -25,26 +26,58 @@ jobs:
       run: |
         ./.github/request_instance.sh
 
+    outputs:
+      spotReqID: ${{steps.request-runner.outputs.spotReqID}}
+      instanceID: ${{steps.request-runner.outputs.instanceID}}
+
   build-yocto:
+    needs: [request-runner]
     runs-on: [self-hosted, linux, x64, yocto]
     steps:
+      -name: Print out the instance and spot req id
+        run: |
+          echo "Running on Spot req ID: ${{needs.request-runner.outputs.spotReqId}}"
+          echo "Running on Instance ID: ${{needs.request-runner.outputs.instanceId}}"
+    # - uses: actions/checkout@v2
+    #   with:
+    #     submodules: recursive
+
+    # - name: Build Yocto Rootfs
+    #   run:  |
+    #     source poky/oe-init-build-env .
+    #     bitbake stephendpmurphy-image
+
+    # - name: Compress the output images
+    #   run: |
+    #     tar -czvf images.tar.gz -C ./tmp/deploy/images/stm32mp1 .
+
+    # - name: Upload Artifacts
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: images
+    #     path: images.tar.gz
+    #     retention-days: 1
+
+  cleanup-runner:
+    needs: [request-runner, build-yocto]
+    runs-on: [ubuntu-latest]
+    steps:
     - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-
-    - name: Build Yocto Rootfs
-      run:  |
-        source poky/oe-init-build-env .
-        bitbake stephendpmurphy-image
-
-    - name: Compress the output images
+    - name: Install AWS CLI
       run: |
-        tar -czvf images.tar.gz -C ./tmp/deploy/images/stm32mp1 .
+        sudo apt-get install awscli jq
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: images
-        path: images.tar.gz
-        retention-days: 1
+    - name: Create AWS CLI Credentials file
+      run: |
+        mkdir -p ~/.aws
+        echo [default] >> ~/.aws/credentials
+        echo region=us-east-2 >> ~/.aws/credentials
+        echo aws_access_key_id=${{secrets.AWS_ACCESS_KEY_ID}} >> ~/.aws/credentials
+        echo aws_secret_access_key=${{secrets.AWS_SECRET_ACCESS_KEY}} >> ~/.aws/credentials
+
+    - name: Cleanup Spot Request & Instance
+      run: |
+        echo "Cleaning up Spot req ID: ${{needs.request-runner.outputs.spotReqId}}"
+        echo "Cleaning up Instance ID: ${{needs.request-runner.outputs.instanceId}}"
+        ./.github/cleanup_instance.sh ${{needs.request-runner.outputs.spotReqId}} ${{needs.request-runner.outputs.instanceId}}
 
