@@ -22,13 +22,13 @@ jobs:
         echo aws_access_key_id=${{secrets.AWS_ACCESS_KEY_ID}} >> ~/.aws/credentials
         echo aws_secret_access_key=${{secrets.AWS_SECRET_ACCESS_KEY}} >> ~/.aws/credentials
 
-    - name: Create an AWS spot request
+    - id: req-spot
       run: |
         ./.github/request_instance.sh
 
     outputs:
-      spotReqID: ${{steps.request-runner.outputs.spotReqID}}
-      instanceID: ${{steps.request-runner.outputs.instanceID}}
+      spotReqID: ${{steps.req-spot.outputs.spotReqID}}
+      instanceID: ${{steps.req-spot.outputs.instanceID}}
 
   build-yocto:
     needs: [request-runner]
