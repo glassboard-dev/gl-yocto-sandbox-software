@@ -1,6 +1,6 @@
 {
     "ImageId": "ami-05398b9d3cbbe65a5",
-    "InstanceType": "c5.24xlarge",
+    "InstanceType": "c5.18xlarge",
     "KeyName": "yocto-runner-keypair",
     "BlockDeviceMappings": [
         {
