@@ -34,7 +34,7 @@ jobs:
     needs: [request-runner]
     runs-on: [self-hosted, linux, x64, yocto]
     steps:
-      -name: Print out the instance and spot req id
+      - name: Print out the instance and spot req id
         run: |
           echo "Running on Spot req ID: ${{needs.request-runner.outputs.spotReqId}}"
           echo "Running on Instance ID: ${{needs.request-runner.outputs.instanceId}}"
