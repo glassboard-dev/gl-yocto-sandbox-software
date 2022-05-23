@@ -16,6 +16,7 @@ jobs:
       run:  |
         source poky/oe-init-build-env .
         MACHINE=sama5d27-som1-ek-sd bitbake core-image-minimal
+        MACHINE=sama5d27-som1-ek-sd bitbake atmel-demo-image
 
     - name: Compress the output images
       run: |
