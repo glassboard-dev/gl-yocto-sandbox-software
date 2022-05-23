@@ -9,9 +9,8 @@ jobs:
     runs-on: [self-hosted, linux, x64, yocto]
     steps:
     - uses: actions/checkout@v2
-    - name: Checkout submodules
-      run: |
-        git submodule update --init --recursive
+      with:
+        submodules: recursive
 
     - name: Build Yocto Rootfs
       run:  |
