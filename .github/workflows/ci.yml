@@ -2,7 +2,7 @@ name: CI - Compile
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, sama5 ]
 
 jobs:
   build-yocto:
@@ -15,11 +15,11 @@ jobs:
     - name: Build Yocto Rootfs
       run:  |
         source poky/oe-init-build-env .
-        bitbake stephendpmurphy-image
+        MACHINE=sama5d27-som1-ek-sd bitbake core-image-minimal
 
     - name: Compress the output images
       run: |
-        tar -czvf images.tar.gz -C ./tmp/deploy/images/stm32mp1 .
+        tar -czvf images.tar.gz -C ./tmp/deploy/images/sama5d27-som1-ek-sd .
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
