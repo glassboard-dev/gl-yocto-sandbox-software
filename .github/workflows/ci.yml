@@ -14,6 +14,7 @@ jobs:
 
     - name: Build Yocto Rootfs
       run:  |
+        apt-get install xxd
         source poky/oe-init-build-env .
         MACHINE=sama5d27-som1-ek-sd bitbake core-image-minimal
         MACHINE=sama5d27-som1-ek-sd bitbake atmel-demo-image
