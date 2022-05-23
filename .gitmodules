@@ -3,7 +3,7 @@
 	url = https://github.com/lgirdk/poky.git
 [submodule "meta-openembedded"]
 	path = meta-openembedded
-	url = git://github.com/openembedded/meta-openembedded.git
+	url = https://github.com/openembedded/meta-openembedded.git
 [submodule "meta-stephendpmurphy"]
 	path = meta-stephendpmurphy
 	url = https://github.com/stephendpmurphy/meta-stephendpmurphy.git
