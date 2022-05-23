@@ -4,6 +4,7 @@
 [submodule "meta-openembedded"]
 	path = meta-openembedded
 	url = https://github.com/openembedded/meta-openembedded.git
+    branch = dunfell
 [submodule "meta-stephendpmurphy"]
 	path = meta-stephendpmurphy
 	url = https://github.com/stephendpmurphy/meta-stephendpmurphy.git
