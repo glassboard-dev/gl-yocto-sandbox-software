@@ -18,12 +18,9 @@ jobs:
         bitbake atmel-demo-image
         bitbake -c populate_sdk atmel-demo-image
 
-    - name: Compress the output images
+    - name: Compress the images and SDK
       run: |
         tar -czvf images.tar.gz -C ./tmp/deploy/images/sama5d27-som1-ek-sd at91bootstrap.bin u-boot.bin u-boot.env zImage atmel-demo-image-sama5d27-som1-ek-sd.wic at91-sama5d27_som1_ek.dtb
-
-    - name: Compress the output images
-      run: |
         tar -czvf sdk.tar.gz -C ./tmp/deploy/sdk .
 
     - name: Upload Images
