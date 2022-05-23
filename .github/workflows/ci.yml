@@ -26,11 +26,22 @@ jobs:
 
     - name: Compress the output images
       run: |
-        tar -czvf images.tar.gz -C ./tmp/deploy/images/sama5d27-som1-ek-sd .
+        tar -czvf images.tar.gz -C ./tmp/deploy/images/sama5d27-som1-ek-sd at91bootstrap.bin u-boot.bin u-boot.env zImage atmel-demo-image-sama5d27-som1-ek-sd.wic at91-sama5d27_som1_ek.dtb
 
-    - name: Upload Artifacts
+    - name: Compress the output images
+      run: |
+        tar -czvf sdk.tar.gz -C ./tmp/deploy/sdk .
+
+    - name: Upload Images
       uses: actions/upload-artifact@v2
       with:
         name: images
         path: images.tar.gz
+        retention-days: 1
+
+    - name: Upload SDK
+      uses: actions/upload-artifact@v2
+      with:
+        name: sdk
+        path: sdk.tar.gz
         retention-days: 1
