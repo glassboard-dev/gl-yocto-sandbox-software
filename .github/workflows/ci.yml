@@ -12,16 +12,10 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Source the oe-init-build-env
+    - name: Build rootfs and SDK
       run:  |
         source poky/oe-init-build-env .
-
-    - name: Build Yocto Rootfs
-      run:  |
         bitbake atmel-demo-image
-
-    - name: Build SDK
-      run: |
         bitbake -c populate_sdk atmel-demo-image
 
     - name: Compress the output images
